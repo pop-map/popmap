@@ -1,25 +1,55 @@
-use super::{Area, Degree, GetPep, GetPop, Location, PostPep, PostPop};
+use super::{Area, GetPep, GetPop, Latitude, Location, Longitude, PostPep, PostPop};
 
-impl Degree {
-    /// Create a new `Degree`
-    ///
-    /// The only valid initerval is `-179'59'59 .. 180'00'00`
-    pub fn new(degree: i16, minute: u8, second: u8) -> Self {
-        let value = Self(degree, minute, second);
-        assert!(value.is_valid());
-        value
-    }
-    fn is_valid(self) -> bool {
-        matches!(self, Degree(-179..=179, 0..=59, 0..=59) | Degree(180, 0, 0))
-    }
-    pub fn radian(self) -> f64 {
-        assert!(self.is_valid());
-        let Self(degree, minute, second) = self;
-        let degree = if degree < 0 { degree + 360 } else { degree };
-        let float = degree as f64 + (minute as f64) / 60.0 + (second as f64) / 3600.0;
-        float / 360.0 * std::f64::consts::TAU
+impl From<Latitude> for (i16, u8, u8) {
+    fn from(Latitude { deg, min, sec }: Latitude) -> Self {
+        (deg, min, sec)
     }
 }
+
+impl From<Longitude> for (i16, u8, u8) {
+    fn from(Longitude { deg, min, sec }: Longitude) -> Self {
+        (deg, min, sec)
+    }
+}
+
+impl TryFrom<(i16, u8, u8)> for Latitude {
+    type Error = &'static str;
+
+    fn try_from((deg, min, sec): (i16, u8, u8)) -> Result<Self, Self::Error> {
+        match (deg, min, sec) {
+            (-89..=89, 0..=59, 0..=59) => Ok(Self { deg, min, sec }),
+            (-90 | 90, 0, 0) => Ok(Self { deg, min, sec }),
+            _ => Err("latitude not in range -90_00_00..=90_00_00"),
+        }
+    }
+}
+
+impl TryFrom<(i16, u8, u8)> for Longitude {
+    type Error = &'static str;
+
+    fn try_from((deg, min, sec): (i16, u8, u8)) -> Result<Self, Self::Error> {
+        match (deg, min, sec) {
+            (-179..=179, 0..=59, 0..=59) => Ok(Self { deg, min, sec }),
+            (180, 0, 0) => Ok(Self { deg, min, sec }),
+            _ => Err("longitude not in range -179_59_59..=180_00_00"),
+        }
+    }
+}
+
+pub trait Angle: Into<(i16, u8, u8)> {
+    fn radian(self) -> f64 {
+        let (deg, min, sec) = self.into();
+        let sign = deg.signum() as f64;
+        let deg = deg.abs_diff(0);
+        let (deg, min, sec) = (deg as f64, min as f64, sec as f64);
+        let rot = (deg + (min + sec / 60.0) / 60.0) / 360.0;
+        let rad = rot * std::f64::consts::TAU;
+        sign * rad
+    }
+}
+
+impl Angle for Longitude {}
+impl Angle for Latitude {}
 
 impl Location {
     /// Compute distance in meters between two location
