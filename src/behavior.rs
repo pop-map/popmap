@@ -92,6 +92,7 @@ impl From<GetPop> for PostPop {
             description,
             location,
             expire,
+            user,
             ..
         }: GetPop,
     ) -> Self {
@@ -100,12 +101,16 @@ impl From<GetPop> for PostPop {
             description,
             location,
             expire,
+            user: telegram_auth::fake_auth(user),
         }
     }
 }
 
 impl From<GetPep> for PostPep {
-    fn from(GetPep { content, .. }: GetPep) -> Self {
-        Self { content }
+    fn from(GetPep { content, user, .. }: GetPep) -> Self {
+        Self {
+            content,
+            user: telegram_auth::fake_auth(user),
+        }
     }
 }
