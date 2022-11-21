@@ -8,6 +8,8 @@ pub type Time = u64;
 
 pub use telegram_auth::{UserAuth, UserInfo};
 
+pub use telegram_auth;
+
 #[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq, Eq, Hash)]
 #[serde(try_from = "(i16, u8, u8)", into = "(i16, u8, u8)")]
 pub struct Longitude {
