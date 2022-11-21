@@ -10,6 +10,10 @@ pub use telegram_auth::{UserAuth, UserInfo};
 
 pub use telegram_auth;
 
+pub const LEN_LIMIT_TITLE: usize = 512;
+pub const LEN_LIMIT_DESCRIPTION: usize = 4096;
+pub const LEN_LIMIT_CONTENT: usize = 4096;
+
 #[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq, Eq, Hash)]
 #[serde(try_from = "(i16, u8, u8)", into = "(i16, u8, u8)")]
 pub struct Longitude {
