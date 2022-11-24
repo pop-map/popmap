@@ -7,7 +7,7 @@ Publicly publish messages (called *pops*) on the globe (geolocation) and receive
 | request | method | path | body type | status | response type |
 |---------|--------|------|------|--------|----------|
 | Post a new *pop* | **`POST`** | `/` `pop` | **`post_pop`** | **`CREATED`** | **`uuid`** |
-| Get *pops* in an area | **`GET`** | `/` `area` | **`area`** | **`OK`** | **`list_pops`** |
+| Get *pops* in an area | **`POST`** | `/` `area` | **`area`** | **`OK`** | **`list_pops`** |
 | Get specific *pop* | **`GET`** | `/` `pop` `/` **`uuid`** | | **`OK`** | **`get_pop`** |
 | Post a *pep* in a *pop* | **`POST`** | `/` `in` `/` **`uuid`** | **`post_pep`** | **`CREATED`** | **`index`** |
 | Get scpecific *pep* | **`GET`** | `/` `in` `/` **`uuid`** `/` **`index`** | | **`OK`** | **`get_pep`** |
