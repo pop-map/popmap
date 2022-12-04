@@ -21,4 +21,4 @@ git = "https://github.com/pop-map/scalararray"
 [dependencies.telegram-auth]
 version = "0.1.0"
 git = "https://github.com/pop-map/telegram-auth"
-rev = "d8001fe"
+rev = "7b1908f"
