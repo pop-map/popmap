@@ -1,5 +1,6 @@
 use serde::{Deserialize, Serialize};
 mod behavior;
+pub mod telegram_auth;
 
 pub use behavior::Angle;
 pub use uuid::Uuid;
@@ -7,8 +8,6 @@ pub use uuid::Uuid;
 pub type Time = u64;
 
 pub use telegram_auth::{UserAuth, UserInfo};
-
-pub use telegram_auth;
 
 pub const LEN_LIMIT_TITLE: usize = 512;
 pub const LEN_LIMIT_DESCRIPTION: usize = 4096;

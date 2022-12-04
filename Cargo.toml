@@ -4,7 +4,11 @@ version = "0.1.0"
 edition = "2021"
 
 [features]
-fake_auth = [ "telegram-auth/fake_auth" ]
+fake_auth = [ ]
+
+[dependencies]
+hex = "0.4.3"
+hmac-sha256 = "1.1.6"
 
 [dependencies.uuid]
 version = "1.2"
@@ -17,8 +21,3 @@ features = [ "derive" ]
 [dependencies.scalararray]
 version = "0.1.0"
 git = "https://github.com/pop-map/scalararray"
-
-[dependencies.telegram-auth]
-version = "0.1.0"
-git = "https://github.com/pop-map/telegram-auth"
-rev = "7b1908f"
