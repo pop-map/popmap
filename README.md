@@ -185,8 +185,8 @@ A new *pop* (message).
         "hash": "f6911206ac5e748bf6911206ac5e748bf6911206ac5e748bf6911206ac5e748b"
     }
     "location": {
-        "lat": [41, 28, 56],
-        "lng": [-5, 47, 2]
+        "lat": 950267,
+        "lng": -53478
     },
     "expire": 1668638702
 }
@@ -250,8 +250,8 @@ A fetched *pop*.
         "photo_url": "https://t.me/i/...",
     }
     "location": {
-        "lat": [41, 28, 56],
-        "lng": [-5, 47, 2]
+        "lat": 950267,
+        "lng": -53478
     },
     "created": 1668631642,
     "expire": 1668638702,
