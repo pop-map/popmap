@@ -123,7 +123,7 @@ A degree encodeed as an integer value as arc-seconds (360x60x60). This encoding 
 
 **`location`** `:object`
 - **lat** **`:angle`** `[-90x60x60 .. +90x60x60]`
-- **lng** **`:angle`** `[-180x60x60+1 .. 180x60x60]`
+- **lng** **`:angle`** `[-180x60x60+1 .. +180x60x60]`
 
 Geolocation, with latitude and longitude in arc-seconds (degress x60 x60).
 
@@ -142,7 +142,7 @@ Geolocation, with latitude and longitude in arc-seconds (degress x60 x60).
 
 **`area`** `:object`
 - **lat** **`:angle`** `[-90x60x60 .. +90x60x60]`
-- **lng** **`:angle`** `[-180x60x60+1 .. 180x60x60]`
+- **lng** **`:angle`** `[-180x60x60+1 .. +180x60x60]`
 - **radius** `:number (meter) [1..]`
 
 Area with center as geolocation and radius from center.
