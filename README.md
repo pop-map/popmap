@@ -103,21 +103,18 @@ Data provided by ***Telegram*** to authenticate a user.
 
 ---
 
-**`angle`** `:array (tuple) len(3)`
-- `:number (degree arc) [..]`
-- `:number (minute arc) [0..59]`
-- `:number (second arc) [0..59]`
+**`angle`** `:number (arc second) [..]`
 
-A degree encodeed as three integer values. This encoding is used to guaranty equality even after serialization and deserialization.
+A degree encodeed as an integer value as arc-seconds (360x60x60). This encoding is used to guaranty equality even after serialization and deserialization.
 
 <details><summary>Examples (click to expand)</summary>
 
 ```json
-[41, 28, 56]
+950267
 ```
 
 ```json
-[-23, 16, 30]
+-534478
 ```
    
 </details>
@@ -125,17 +122,17 @@ A degree encodeed as three integer values. This encoding is used to guaranty equ
 ---
 
 **`location`** `:object`
-- **lat** **`:angle`** `[-90°00'00" .. 90°00'00"]`
-- **lng** **`:angle`** `[-179°59'59" .. 180°00'00"]`
+- **lat** **`:angle`** `[-90x60x60 .. +90x60x60]`
+- **lng** **`:angle`** `[-180x60x60+1 .. 180x60x60]`
 
-Geolocation, with latitude and longitude in degrees.
+Geolocation, with latitude and longitude in arc-seconds (degress x60 x60).
 
 <details><summary>Example (click to expand)</summary>
 
 ```json
 {
-    "lat": [41, 28, 56],
-    "lng": [-5, 47, 2]
+    "lat": 950267,
+    "lng": -53478
 }
 ```
 
@@ -144,8 +141,8 @@ Geolocation, with latitude and longitude in degrees.
 ---
 
 **`area`** `:object`
-- **lat** **`:angle`** `[-90°00'00" .. 90°00'00"]`
-- **lng** **`:angle`** `[-179°59'59" .. 180°00'00"]`
+- **lat** **`:angle`** `[-90x60x60 .. +90x60x60]`
+- **lng** **`:angle`** `[-180x60x60+1 .. 180x60x60]`
 - **radius** `:number (meter) [1..]`
 
 Area with center as geolocation and radius from center.
@@ -154,8 +151,8 @@ Area with center as geolocation and radius from center.
 
 ```json
 {
-    "lat": [41, 28, 56],
-    "lng": [-5, 47, 2],
+    "lat": 950267,
+    "lng": -53478
     "radius": 450
 }
 ```
