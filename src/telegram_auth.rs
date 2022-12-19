@@ -29,8 +29,8 @@ impl UserAuth {
     ///
     /// If `fake_auth` feature is activated, returns `true` when `.hash == "FAKE_AUTH"`
     pub fn is_valid(&self, token: Token) -> bool {
-        if cfg!(feature = "fake_auth") {
-            return self.hash == "FAKE_AUTH";
+        if cfg!(feature = "fake_auth") && self.hash == "FAKE_AUTH" {
+            return true;
         };
         use hex::FromHex;
         if let Ok(hash) = <[u8; 32]>::from_hex(&self.hash) {

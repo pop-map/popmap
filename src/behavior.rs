@@ -1,50 +1,46 @@
 use super::{Area, GetPep, GetPop, Latitude, Location, Longitude, PostPep, PostPop};
 
-impl From<Latitude> for (i16, u8, u8) {
-    fn from(Latitude { deg, min, sec }: Latitude) -> Self {
-        (deg, min, sec)
+impl From<Latitude> for i32 {
+    fn from(Latitude(sec_arc): Latitude) -> Self {
+        sec_arc
     }
 }
 
-impl From<Longitude> for (i16, u8, u8) {
-    fn from(Longitude { deg, min, sec }: Longitude) -> Self {
-        (deg, min, sec)
+impl From<Longitude> for i32 {
+    fn from(Longitude(sec_arc): Longitude) -> Self {
+        sec_arc
     }
 }
 
-impl TryFrom<(i16, u8, u8)> for Latitude {
+impl TryFrom<i32> for Latitude {
     type Error = &'static str;
 
-    fn try_from((deg, min, sec): (i16, u8, u8)) -> Result<Self, Self::Error> {
-        match (deg, min, sec) {
-            (-89..=89, 0..=59, 0..=59) => Ok(Self { deg, min, sec }),
-            (-90 | 90, 0, 0) => Ok(Self { deg, min, sec }),
-            _ => Err("latitude not in range -90_00_00..=90_00_00"),
+    fn try_from(sec_arc: i32) -> Result<Self, Self::Error> {
+        if (-90 * 60 * 60..90 * 60 * 60).contains(&sec_arc) {
+            Ok(Self(sec_arc))
+        } else {
+            Err("latitude not in range -90_00_00..=90_00_00 (base 60)")
         }
     }
 }
 
-impl TryFrom<(i16, u8, u8)> for Longitude {
+impl TryFrom<i32> for Longitude {
     type Error = &'static str;
 
-    fn try_from((deg, min, sec): (i16, u8, u8)) -> Result<Self, Self::Error> {
-        match (deg, min, sec) {
-            (-179..=179, 0..=59, 0..=59) => Ok(Self { deg, min, sec }),
-            (180, 0, 0) => Ok(Self { deg, min, sec }),
-            _ => Err("longitude not in range -179_59_59..=180_00_00"),
+    fn try_from(sec_arc: i32) -> Result<Self, Self::Error> {
+        if (-180 * 60 * 60 + 1..180 * 60 * 60).contains(&sec_arc) {
+            Ok(Self(sec_arc))
+        } else {
+            Err("longitude not in range -179_59_59..=180_00_00 (base 60)")
         }
     }
 }
 
-pub trait Angle: Into<(i16, u8, u8)> {
+pub trait Angle: Into<i32> {
     fn radian(self) -> f64 {
-        let (deg, min, sec) = self.into();
-        let sign = deg.signum() as f64;
-        let deg = deg.abs_diff(0);
-        let (deg, min, sec) = (deg as f64, min as f64, sec as f64);
-        let rot = (deg + (min + sec / 60.0) / 60.0) / 360.0;
-        let rad = rot * std::f64::consts::TAU;
-        sign * rad
+        let sec_arc: i32 = self.into();
+        let rot = ((sec_arc as f64 / 60.0) / 60.0) / 360.0;
+        rot * std::f64::consts::TAU
     }
 }
 

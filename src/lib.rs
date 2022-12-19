@@ -14,20 +14,12 @@ pub const LEN_LIMIT_DESCRIPTION: usize = 4096;
 pub const LEN_LIMIT_CONTENT: usize = 4096;
 
 #[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq, Eq, Hash)]
-#[serde(try_from = "(i16, u8, u8)", into = "(i16, u8, u8)")]
-pub struct Longitude {
-    deg: i16,
-    min: u8,
-    sec: u8,
-}
+#[serde(try_from = "i32", into = "i32")]
+pub struct Longitude(i32);
 
 #[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq, Eq, Hash)]
-#[serde(try_from = "(i16, u8, u8)", into = "(i16, u8, u8)")]
-pub struct Latitude {
-    deg: i16,
-    min: u8,
-    sec: u8,
-}
+#[serde(try_from = "i32", into = "i32")]
+pub struct Latitude(i32);
 
 #[derive(Serialize, Deserialize, Clone, Copy, Debug, PartialEq, Eq, Hash)]
 pub struct Location {
